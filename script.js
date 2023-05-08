@@ -13,4 +13,8 @@ async function getMovies(searchItem) {
   }
 }
 
+function displayMovieList(movies) {
+  resultGrid.innerHTML = "";
+}
+
 getMovies('inception');
