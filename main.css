@@ -191,7 +191,7 @@ img{
 .movie-info .year{
     font-weight: 500;
 }
-.movie-info .rated{
+.movie-info .ratings{
     background-color: var(--yellow-color);
     padding: 0.4rem;
     margin: 0 0.4rem;

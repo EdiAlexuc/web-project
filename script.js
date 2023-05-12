@@ -74,9 +74,10 @@ function displayMovieDetails(details){
         <h3 class = "movie-title">${details.Title}</h3>
         <ul class = "movie-misc-info">
             <li class = "year">Year: ${details.Year}</li>
-            <li class = "rated">Ratings: ${details.Rated}</li>
-            <li class = "released">Released: ${details.Released}</li>
+            <li class = "ratings"> Ratings: IMDB ${details.imdbRating}, Metascore ${details.Metascore}</li>
+            <li class = "released"> Released: ${details.Released}</li>
         </ul>
+        <p class = "agerestrictions"> Age restrictions: ${details.Rated}</p>
         <p class = "genre"><b>Genre:</b> ${details.Genre}</p>
         <p class = "writer"><b>Writer:</b> ${details.Writer}</p>
         <p class = "actors"><b>Actors: </b>${details.Actors}</p>
@@ -84,6 +85,12 @@ function displayMovieDetails(details){
         <p class = "language"><b>Language:</b> ${details.Language}</p>
         <p class = "awards"><b><i class = "fas fa-award"></i></b> ${details.Awards}</p>
     </div>
+    <div id = "recommendation"> </div>
+    <script> 
+        if(${details.imdbRating}>=7.5 && ${details.Metascore}>=75){
+            getElementById("recommandation").innerHTML="Recommended";
+        }
+    </script>
     `;
 }
 
