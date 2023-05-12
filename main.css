@@ -294,3 +294,21 @@ img{
         margin-left: 0;
     }
 }
+
+#trailer-container {
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+}
+
+#trailer-container iframe {
+    width: 800px;
+    height: 450px;
+}
+
+@media (max-width: 800px) {
+    #trailer-container iframe {
+      width: 100%;
+      height: 300px;
+    }
+}
