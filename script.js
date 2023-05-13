@@ -4,11 +4,17 @@ const resultGrid = document.getElementById('result-grid');
 
 // Load movies from API
 async function loadMovies(searchTerm) {
-  const URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=fc1fef96`;
-  const res = await fetch(URL);
-  const data = await res.json();
-  if (data.Response == "True") {
-    displayMovieList(data.Search);
+  let cachedMovies = getCachedMovies(searchTerm);
+  if(cachedMovies) {
+    displayMovieList(cachedMovies);
+  } else {
+    const URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=fc1fef96`;
+    const res = await fetch(URL);
+    const data = await res.json();
+    if (data.Response == "True") {
+      cacheMovies(searchTerm, data.Search);
+      displayMovieList(data.Search);
+    }
   }
 }
 
@@ -20,6 +26,19 @@ function findMovies() {
   } else {
     searchList.classList.add('hide-search-list');
   }
+}
+
+function cacheMovies(searchTerm, movies) {
+  localStorage.setItem(searchTerm, JSON.stringify(movies));
+}
+
+function getCachedMovies(searchTerm) {
+  const cachedMovies = localStorage.getItem(searchTerm);
+  if(cachedMovies) {
+    return JSON.parse(cachedMovies);
+  }
+  
+  return null;
 }
 
 function displayMovieList(movies) {
