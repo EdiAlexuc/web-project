@@ -231,7 +231,7 @@ img{
 
 @media(max-width: 450px){
     .logo p{
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     .search-element .form-control{
         width: 90%;
@@ -295,6 +295,13 @@ img{
     }
 }
 
+#recommendation-message {
+    padding: 0.4rem;
+    margin: 0 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
 #trailer-container {
     margin-top: 6rem;
     display: flex;
@@ -304,14 +311,6 @@ img{
 #trailer-container iframe {
     width: 800px;
     height: 450px;
-}
-
-#recommandation-message {
-    padding: 0.4rem;
-    margin: 0 0.4rem;
-    border-radius: 3px;
-    font-weight: 600;
-
 }
 
 @media (max-width: 800px) {
