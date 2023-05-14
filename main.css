@@ -231,7 +231,7 @@ img{
 
 @media(max-width: 450px){
     .logo p{
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
     .search-element .form-control{
         width: 90%;
