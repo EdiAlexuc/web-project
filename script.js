@@ -1,6 +1,7 @@
 const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
+let searchCounter = 0; // Counter for tracking number of searches
 
 // Load movies from API
 async function loadMovies(searchTerm) {
@@ -18,11 +19,17 @@ async function loadMovies(searchTerm) {
   }
 }
 
+// Search movies in the JSON
 function findMovies() {
   let searchTerm = movieSearchBox.value.trim();
   if (searchTerm.length > 0) {
     searchList.classList.remove('hide-search-list');
     loadMovies(searchTerm);
+    searchCounter++; // Increment search counter
+    if(searchCounter > 20) {
+      clearCache(); // Call method to clear cache after 10 searches
+      searchCounter = 0;
+    }
   } else {
     searchList.classList.add('hide-search-list');
   }
@@ -137,3 +144,7 @@ if (event.target.className != "form-control") {
 searchList.classList.add('hide-search-list');
 }
 });
+
+function clearCache() {
+  localStorage.clear();
+}
