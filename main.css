@@ -24,7 +24,8 @@ img{
 }
 .wrapper{
     min-height: 100vh;
-    background-color: var(--dark-color);
+/*     background-color: var(--dark-color); */
+    background-color: black;
 }
 .wrapper .container{
     max-width: 1200px;
@@ -331,7 +332,7 @@ img{
     opacity: 1;
     transform: translateY(0);
 } 
-.wrapper {
+/* .wrapper {
     background-color: black;
-}
+} */
 
