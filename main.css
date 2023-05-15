@@ -296,10 +296,11 @@ img{
 }
 
 #recommendation-message {
-    padding: 0.4rem;
-    margin: 0 0.4rem;
-    border-radius: 3px;
-    font-weight: 600;
+    color: var(--yellow-color);
+    font-size: large;
+    padding: 1.4rem;
+    border-radius: 4px;
+    font-weight: 1000;
 }
 
 #trailer-container {
