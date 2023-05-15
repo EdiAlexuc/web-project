@@ -2,7 +2,6 @@ const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
 let searchCounter = 0; // Counter for tracking number of searches
-const cacheExpiry = 1 * 60 * 1000;//cache expiry time is 1 minute
 
 // Load movies from API
 async function loadMovies(searchTerm) {
@@ -122,7 +121,6 @@ function displayMovieDetails(details) {
       <p class="awards"><b><i class="fas fa-award"></i></b> ${details.Awards}</p>
       <p id="recommendation-message"></p>
     </div>
-    <div id="trailer-container"></div>
   `;
     isMovieRecommended(details.Title, details.imdbRating, details.Metascore);
     loadMovieTrailer(details.Title, details.Year);
