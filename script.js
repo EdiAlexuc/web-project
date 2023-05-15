@@ -5,7 +5,7 @@ let searchCounter = 0; // Counter for tracking number of searches
 
 // Load movies from API
 async function loadMovies(searchTerm) {
-  let cachedMovies = getCachedMovies(searchTerm, cacheExpiry);
+  let cachedMovies = getCachedMovies(searchTerm);
   if(cachedMovies) {
     displayMovieList(cachedMovies);
   } else {
@@ -130,11 +130,11 @@ function isMovieRecommended(title, imdbRating, metascore){
     let message;
     if((imdbRating!="N/A") || (metascore!="N/A")){
       if((imdbRating >= 8.0) || (metascore >= 80)) {
-        message = `${title} is a very good movie. You should watch it!`;
+        message = `${title} is a very good movie. Check out the trailer ↓ !`;
       } else if((imdbRating<5) || (metascore < 50)) {
-        message = `${title} is not a movie you should generally consider.`;
+        message = `${title} is not a movie you should generally consider. If you are intrested, check out the trailer Check out the trailer ↓ !`;
       } else {
-        message = `${title} is a decent movie. You could try watching it!`;
+        message = `${title} is a decent movie. Check out the trailer ↓ !`;
     }
   } else message = `${title} doesn't have an imdb rating or metascore so we can't recommend it or not recommend it.`
     document.getElementById("recommendation-message").innerHTML = message;
