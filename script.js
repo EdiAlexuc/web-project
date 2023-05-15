@@ -5,7 +5,7 @@ let searchCounter = 0; // Counter for tracking number of searches
 
 // Load movies from API
 async function loadMovies(searchTerm) {
-  let cachedMovies = getCachedMovies(searchTerm, cacheExpiry);
+  let cachedMovies = getCachedMovies(searchTerm);
   if(cachedMovies) {
     displayMovieList(cachedMovies);
   } else {
@@ -162,3 +162,25 @@ searchList.classList.add('hide-search-list');
 function clearCache() {
   localStorage.clear();
 }
+
+// Function to check if an element is in the viewport
+function isInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+
+// Function to handle the scroll event
+function handleScroll() {
+  const trailerContainer = document.getElementById('trailer-container');
+  if (isInViewport(trailerContainer)) {
+    trailerContainer.classList.add('show');
+  }
+}
+
+// Add scroll event listener
+window.addEventListener('scroll', handleScroll);

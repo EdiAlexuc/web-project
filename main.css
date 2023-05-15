@@ -32,8 +32,8 @@ img{
     padding: 0 1rem;
 }
 .search-container{
-    background-color: var(--md-dark-color);
-    height: 180px;
+    background-color: rgb(18,18,18);
+    height: 90px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -54,7 +54,7 @@ img{
     font-weight: bold;
 }
 .logo p span{
-    color: var(--yellow-color);
+    color: rgb(245,197,24);
 }
 .search-element{
     display: -webkit-box;
@@ -319,3 +319,20 @@ img{
         height: 300px;
     }
 }
+
+.trailer-animation {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.trailer-animation.show {
+    opacity: 1;
+    transform: translateY(0);
+} 
+.wrapper {
+    background-color: black;
+}
+/* .search-container {
+    background-color: black;
+} */
