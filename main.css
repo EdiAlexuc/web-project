@@ -295,6 +295,13 @@ img{
     }
 }
 
+#recommendation-message {
+    padding: 0.4rem;
+    margin: 0 0.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
 #trailer-container {
     margin-top: 16rem;
     display: flex;

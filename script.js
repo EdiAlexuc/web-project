@@ -2,10 +2,11 @@ const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
 let searchCounter = 0; // Counter for tracking number of searches
+const cacheExpiry = 1 * 60 * 1000;//cache expiry time is 1 minute
 
 // Load movies from API
 async function loadMovies(searchTerm) {
-  let cachedMovies = getCachedMovies(searchTerm);
+  let cachedMovies = getCachedMovies(searchTerm, cacheExpiry);
   if(cachedMovies) {
     displayMovieList(cachedMovies);
   } else {
@@ -76,7 +77,7 @@ function loadMovieDetails() {
     movie.addEventListener('click', async () => {
       searchList.classList.add('hide-search-list');
       movieSearchBox.value = "";
-      const result = await fetch(`http://www.omdbapi.com/?i=${movie.dataset.id}&apikey=fc1fef96`);
+      const result = await fetch(`https://www.omdbapi.com/?i=${movie.dataset.id}&apikey=fc1fef96`);
       const movieDetails = await result.json();
       displayMovieDetails(movieDetails);
     });
@@ -119,12 +120,27 @@ function displayMovieDetails(details) {
       <p class="plot"><b>Plot:</b> ${details.Plot}</p>
       <p class="language"><b>Language:</b> ${details.Language}</p>
       <p class="awards"><b><i class="fas fa-award"></i></b> ${details.Awards}</p>
+      <p id="recommendation-message"></p>
     </div>
     <div id="trailer-container"></div>
-    <div id="recommendation"></div>
   `;
-loadMovieTrailer(details.Title, details.Year);
+    isMovieRecommended(details.Title, details.imdbRating, details.Metascore);
+    loadMovieTrailer(details.Title, details.Year);
 }
+
+function isMovieRecommended(title, imdbRating, metascore){
+    let message;
+    if((imdbRating!="N/A") || (metascore!="N/A")){
+      if((imdbRating >= 8.0) || (metascore >= 80)) {
+        message = `${title} is a very good movie. You should watch it!`;
+      } else if((imdbRating<5) || (metascore < 50)) {
+        message = `${title} is not a movie you should generally consider.`;
+      } else {
+        message = `${title} is a decent movie. You could try watching it!`;
+    }
+  } else message = `${title} doesn't have an imdb rating or metascore so we can't recommend it or not recommend it.`
+    document.getElementById("recommendation-message").innerHTML = message;
+  }
 
 function displayMovieTrailer(trailerId) {
   const trailerContainer = document.getElementById('trailer-container');
