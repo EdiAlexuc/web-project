@@ -1,3 +1,4 @@
+// Get  the movie search box, search list, and result grid elements
 const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
@@ -37,10 +38,12 @@ function findMovies() {
   }
 }
 
+// Cache movies in local storage
 function cacheMovies(searchTerm, movies) {
   localStorage.setItem(searchTerm, JSON.stringify(movies));
 }
 
+// Get cached movies from local storage
 function getCachedMovies(searchTerm) {
   const cachedMovies = localStorage.getItem(searchTerm);
   if(cachedMovies) {
@@ -50,6 +53,7 @@ function getCachedMovies(searchTerm) {
   return null;
 }
 
+// Display the movie list in the search list element
 function displayMovieList(movies) {
   searchList.innerHTML = "";
   for (let idx = 0; idx < movies.length; idx++) {
@@ -72,6 +76,7 @@ function displayMovieList(movies) {
   loadMovieDetails();
 }
 
+// Load movie details when a movie is clicked
 function loadMovieDetails() {
   const searchListMovies = searchList.querySelectorAll('.search-list-item');
   searchListMovies.forEach(movie => {
@@ -85,6 +90,7 @@ function loadMovieDetails() {
   });
 }
 
+// Load movie trailer from Youtube
 async function loadMovieTrailer(title, year) {
   const apiKey = 'AIzaSyB9cC9bexnuE2O2FFJt_q3n9aUDFa_oxrg';
   const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
@@ -102,6 +108,7 @@ async function loadMovieTrailer(title, year) {
   }
 }
 
+// Display the movie details in the reult grid element
 function displayMovieDetails(details) {
   resultGrid.innerHTML = `
     <div class="movie-poster">
@@ -128,6 +135,7 @@ function displayMovieDetails(details) {
     loadMovieTrailer(details.Title, details.Year);
 }
 
+// Check if a movie is recommended based on ratings
 function isMovieRecommended(title, imdbRating, metascore){
     let message;
     if((imdbRating!="N/A") || (metascore!="N/A")){
@@ -142,6 +150,7 @@ function isMovieRecommended(title, imdbRating, metascore){
     document.getElementById("recommendation-message").innerHTML = message;
   }
 
+  // Display the movie trailer
 function displayMovieTrailer(trailerId) {
   const trailerContainer = document.getElementById('trailer-container');
   trailerContainer.innerHTML = `
@@ -149,18 +158,20 @@ function displayMovieTrailer(trailerId) {
   `;
 }
 
-
+// Display a message when no trailer is available
 function displayNoTrailerMessage() {
 const trailerContainer = document.getElementById('trailer-container');
 trailerContainer.innerHTML = '<p>No trailer available.</p>';
 }
 
+// Close the search list when clicking outside the search
 window.addEventListener('click', (event) => {
 if (event.target.className != "form-control") {
 searchList.classList.add('hide-search-list');
 }
 });
 
+// Clear cache
 function clearCache() {
   localStorage.clear();
 }
