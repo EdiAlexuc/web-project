@@ -1,4 +1,4 @@
-// Get  the movie search box, search list, and result grid elements
+// Get  the movie search box, search list, result grid elements and searchCounter for clearing the cache
 const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
@@ -7,12 +7,15 @@ let searchCounter = 0; // Counter for tracking number of searches
 // Load movies from API
 async function loadMovies(searchTerm) {
   let cachedMovies = getCachedMovies(searchTerm);
+  // If there are cached movies for the search term, it will display them
   if(cachedMovies) {
     displayMovieList(cachedMovies);
+  // Else, it uses the URL to fetch movie data from the OMDB API
   } else {
     const URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=72eac67a`;
     const res = await fetch(URL);
     const data = await res.json();
+    // If data was found regarding the search, it will cache it and display the data found.
     if (data.Response == "True") {
       cacheMovies(searchTerm, data.Search);
       displayMovieList(data.Search);
@@ -23,6 +26,8 @@ async function loadMovies(searchTerm) {
 // Search movies in the JSON
 function findMovies() {
   let searchTerm = movieSearchBox.value.trim();
+  /* If if the user typed something to search (the serch term length is greater than 0)
+  it will make the list of movies to appear */
   if (searchTerm.length > 0) {
     searchList.classList.remove('hide-search-list');
     loadMovies(searchTerm);
@@ -31,6 +36,7 @@ function findMovies() {
       clearCache(); // Call method to clear cache after 10 searches
       searchCounter = 0;
     }
+  // Else, the list will remain hidden until the user types something
   } else {
     searchList.classList.add('hide-search-list');
     resultGrid.innerHTML = '';
@@ -56,12 +62,16 @@ function getCachedMovies(searchTerm) {
 // Display the movie list in the search list element
 function displayMovieList(movies) {
   searchList.innerHTML = "";
+  /* For each movie, using it's index, it will create an element
+  and will asign to it the imdb ID of the movie and adds the css to it*/
   for (let idx = 0; idx < movies.length; idx++) {
     let movieListItem = document.createElement('div');
     movieListItem.dataset.id = movies[idx].imdbID;
     movieListItem.classList.add('search-list-item');
+    // If the current movie has no poster, it will assign a default image to it
     let moviePoster = movies[idx].Poster != "N/A" ? movies[idx].Poster : "image_not_found.png";
-
+    /* Creates the html code for each movie in the list and then adds 
+    the item to the list */
     movieListItem.innerHTML = `
       <div class="search-item-thumbnail">
         <img src="${moviePoster}">
@@ -79,10 +89,13 @@ function displayMovieList(movies) {
 // Load movie details when a movie is clicked
 function loadMovieDetails() {
   const searchListMovies = searchList.querySelectorAll('.search-list-item');
+  // It iterates each movie and adds the click event listener
   searchListMovies.forEach(movie => {
     movie.addEventListener('click', async () => {
+      // If the user clicks on a movie, the search list will become hidden again
       searchList.classList.add('hide-search-list');
       movieSearchBox.value = "";
+      // Using the imdb ID stored in movie.dataset.id, it will fetch the movie's data
       const result = await fetch(`https://www.omdbapi.com/?i=${movie.dataset.id}&apikey=72eac67a`);
       const movieDetails = await result.json();
       displayMovieDetails(movieDetails);
@@ -93,10 +106,7 @@ function loadMovieDetails() {
 // Load movie trailer from Youtube
 async function loadMovieTrailer(title, year) {
   const apiKey = 'AIzaSyB9cC9bexnuE2O2FFJt_q3n9aUDFa_oxrg';
-  const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
-    title + ' ' + year + ' official trailer'
-  )}&key=${apiKey}`;
-
+  const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(title + ' ' + year + ' official trailer')}&key=${apiKey}`;
   const response = await fetch(searchURL);
   const data = await response.json();
 
@@ -108,8 +118,9 @@ async function loadMovieTrailer(title, year) {
   }
 }
 
-// Display the movie details in the reult grid element
+// Display the movie details in the result-grid element
 function displayMovieDetails(details) {
+  // Creates the html code for the result grid
   resultGrid.innerHTML = `
     <div class="movie-poster">
       <img src="${details.Poster != 'N/A' ? details.Poster : 'image_not_found.png'}" alt="movie poster">
@@ -138,7 +149,10 @@ function displayMovieDetails(details) {
 // Check if a movie is recommended based on ratings
 function isMovieRecommended(title, imdbRating, metascore){
     let message;
+    // If the movie has at least one of the two ratings it goes on
     if((imdbRating!="N/A") || (metascore!="N/A")){
+      /*It checks in what group of rating score the movie is positioned and assigns the 
+      right custom message to it */
       if((imdbRating >= 8.0) || (metascore >= 80)) {
         message = `${title} is a very good movie. Check out the trailer ↓ !`;
       } else if((imdbRating<5) || (metascore < 50)) {
@@ -146,7 +160,8 @@ function isMovieRecommended(title, imdbRating, metascore){
       } else {
         message = `${title} is a decent movie. Check out the trailer ↓ !`;
     }
-  } else message = `${title} doesn't have an imdb rating or metascore so we can't recommend it or not recommend it.`
+    // Else, if the movie has no rating, it will show this message
+    } else message = `${title} doesn't have an imdb rating or metascore so we can't recommend it or not recommend it, but maybe you can check out the trailer ↓`
     document.getElementById("recommendation-message").innerHTML = message;
   }
 

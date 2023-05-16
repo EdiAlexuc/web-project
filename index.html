@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Search Website</title>
+    <title>PopcornCritics: Movie Recommendation Website</title>
     <!-- font awesome icons cdn -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- custom css -->
@@ -16,14 +16,14 @@
         <!-- logo -->
         <div class = "logo">
             <div class = "container">
-                <p>Golden<span>Goose</span></p>
+                <p>Popcorn<span>Critics</span></p>
             </div>
         </div>
-        <!-- end of logo -->
+
         <!-- search container -->
         <div class = "search-container">
             <div class = "search-element">
-                <h3>Search Movie:</h3>
+                <h3>Search for Movie:</h3>
                 <input type = "text" class = "form-control" placeholder="Search Movie Title ..." id = "movie-search-box" onkeyup="findMovies()" onclick = "findMovies()">
 
                 <div class = "search-list" id = "search-list">
@@ -40,7 +40,6 @@
                 </div>
             </div>
         </div>
-        <!-- end of search container -->
 
         <!-- result container -->
         <div class = "container" id="result-container-1">
@@ -68,12 +67,10 @@
                 </div>
             </div>
         </div>
-        <!-- end of result container -->
+        <!-- trailer container -->
         <div class="trailer-container trailer-animation" id="trailer-container"></div>
     </div>
 
-
-    <!-- movie app js -->
     <script src = "script.js"></script>
 </body>
 </html>
