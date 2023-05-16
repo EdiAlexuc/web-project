@@ -32,6 +32,8 @@ function findMovies() {
     }
   } else {
     searchList.classList.add('hide-search-list');
+    resultGrid.innerHTML = '';
+    document.getElementById('trailer-container').innerHTML='';
   }
 }
 
